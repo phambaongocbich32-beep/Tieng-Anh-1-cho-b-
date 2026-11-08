@@ -139,6 +139,31 @@ h2{font:800 30px/1.15 var(--f-display);margin:0 0 6px;text-wrap:balance}
 .weeks .chip{text-align:center;padding:8px 0;white-space:nowrap}
 .sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
 .sheet img{width:100%;border-radius:12px;border:1px solid var(--line);cursor:zoom-in;background:#fff;display:block}
+.sheet.one{grid-template-columns:minmax(0,900px)}
+.stage{container-type:inline-size;position:relative;aspect-ratio:16/9;width:100%;max-width:960px;border-radius:20px;overflow:hidden;background:#fbf7ee;border:3px dashed #4a82c8;color:#1a2f9a;font-family:var(--f-display)}
+.stage::after{content:"";position:absolute;inset:auto 0 0 0;height:12cqw;pointer-events:none;background:radial-gradient(circle at 4% 100%,#2f9a3f 0 9cqw,transparent 9.2cqw),radial-gradient(circle at 98% 100%,#3aa84c 0 10cqw,transparent 10.2cqw),radial-gradient(circle at 90% 100%,#56b95f 0 7cqw,transparent 7.2cqw)}
+.lt{position:absolute;top:1.8cqw;left:5cqw;background:#fff;border:.25cqw dashed #4a82c8;border-radius:3cqw;padding:.5cqw 2.5cqw;font-size:2.4cqw;font-weight:800;font-style:italic}
+.lg{position:absolute;inset:8.5cqw 3cqw 8cqw 2cqw;display:grid;grid-template-columns:14cqw 36cqw 1fr;gap:2cqw;align-items:center}
+.lc{background:#fff;border:.3cqw dashed #4a82c8;border-radius:50%;aspect-ratio:1.3;display:grid;place-items:center;font-size:6cqw;font-weight:800;transition:.25s}
+.lws{display:grid;gap:1.4cqw}
+.lw{display:flex;align-items:center;gap:1.4cqw;background:#fff;border:.25cqw solid #9cc3ee;border-radius:1.8cqw;padding:.8cqw 1.4cqw;transition:.25s}
+.lw img{height:7.5cqw;width:9cqw;object-fit:contain}
+.lw b{font-size:3.4cqw;flex:1;text-align:center}
+.lss{display:grid;gap:1.2cqw}
+.lh{background:#fdeaa8;border-radius:1.4cqw;padding:.7cqw 1.6cqw;font-size:2.7cqw;font-weight:800;color:#1a1a1a}
+.ls{border-radius:1.2cqw;padding:.8cqw 1.6cqw;font-size:2.6cqw;font-weight:800;transition:.25s}
+.on{transform:scale(1.05);color:#e0201b!important;box-shadow:0 0 0 .4cqw #ffd54a}
+.lc.on{background:#fff3c4}
+.pres{background:#14284b;border-color:#e2a72e;color:#fff}
+.pres::after{display:none}
+.pc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2cqw;text-align:center;padding:3cqw}
+.pl{font-size:16cqw;font-weight:800;color:#e2a72e;line-height:1}
+.pt{font-size:9cqw;font-weight:800;line-height:1.05}
+.pt2{font-size:5.4cqw;font-weight:800;line-height:1.2;max-width:90%}
+.pv{font-size:3.2cqw;opacity:.85;font-family:var(--f-body);font-weight:700}
+.pimg{background:#fff;border-radius:2.4cqw;height:25cqw;width:34cqw;overflow:hidden;padding:1cqw;flex:none}
+.pimg.small{height:17cqw;width:24cqw}
+.pimg img{height:100%;width:100%;object-fit:contain}
 .note{color:var(--muted);font-size:14px;margin-top:22px}
 @media (max-width:720px){
   .hero{grid-template-columns:1fr;padding:22px}
@@ -258,7 +283,7 @@ function runQuiz(root,qs,opt){
 
 /* views */
 const V={};
-const TABS=[['home','Trang chủ'],['vocab','Từ vựng'],['patterns','Mẫu câu'],['exercise','Bài tập'],['speaking','Luyện nói'],['games','Trò chơi'],['test','Bài kiểm tra'],['mindmap','Sơ đồ tư duy'],['sheets','Phiếu bài tập']];
+const TABS=[['home','Trang chủ'],['vocab','Từ vựng'],['patterns','Mẫu câu'],['exercise','Bài tập'],['speaking','Luyện nói'],['games','Trò chơi'],['test','Bài kiểm tra'],['mindmap','Sơ đồ tư duy'],['sheets','Phiếu bài tập'],['video','Video bài học'],['present','Thuyết trình']];
 function chipRow(opts,cur,on){const r=h('div',{className:'chips'});opts.forEach(([v,l])=>{const b=h('button',{className:'chip','aria-pressed':String(cur===v),on:{click:()=>on(v)}},l);r.append(b)});return r}
 const unitOpts=()=>[['all','Tất cả'],...U.map(u=>[u.n,'Unit '+u.n])];
 
@@ -267,7 +292,7 @@ V.home=r=>{
     h('div',{},h('h2',{},'Học Tiếng Anh 1 thật vui!'),h('p',{},`${ALLW.length} từ vựng, mẫu câu, bài tập và luyện nói của Unit 1–16, hình ảnh lấy từ sách giáo khoa Global Success. Làm đúng là có pháo hoa và lời khen "Great job!".`),
       h('div',{className:'row'},h('button',{className:'btn',on:{click:()=>go('vocab')}},'Bắt đầu học'),h('button',{className:'btn alt',on:{click:()=>go('test')}},'Làm bài kiểm tra'))),
     h('div',{className:'pics'},['ball','bike','cat','truck'].map(k=>h('div',{},h('img',{src:IMG[k],alt:k}))))));
-  const C=[['vocab','Từ vựng','Thẻ từ có tranh thật, bấm để nghe phát âm.','#e2a72e'],['patterns','Mẫu câu','Mẫu câu từng Unit kèm nghĩa tiếng Việt và luyện xếp câu.','#1f8f7a'],['exercise','Bài tập','Bài tập theo từng Unit và Ôn tập, máy chấm từng câu.','#d9503f'],['speaking','Luyện nói','Đọc theo cô, hỏi đáp, nhìn tranh nói và nghe audio sách.','#14284b'],['games','Trò chơi','6 trò chơi: nối, lật thẻ, xếp chữ, nghe chọn hình, cờ ca-rô, Simon says.','#e2a72e'],['test','Bài kiểm tra','Đề giữa kỳ và cuối kỳ. Máy chấm điểm ngay.','#d9503f'],['mindmap','Sơ đồ tư duy','16 sơ đồ tranh từ vựng và mẫu câu, mỗi Unit một sơ đồ.','#1f8f7a'],['sheets','Phiếu bài tập','35 tuần phiếu bài tập cuối tuần kèm đáp án để in hoặc xem.','#14284b']];
+  const C=[['vocab','Từ vựng','Thẻ từ có tranh thật, bấm để nghe phát âm.','#e2a72e'],['patterns','Mẫu câu','Mẫu câu từng Unit kèm nghĩa tiếng Việt và luyện xếp câu.','#1f8f7a'],['exercise','Bài tập','Bài tập theo từng Unit và Ôn tập, máy chấm từng câu.','#d9503f'],['speaking','Luyện nói','Đọc theo cô, hỏi đáp, nhìn tranh nói và nghe audio sách.','#14284b'],['games','Trò chơi','6 trò chơi: nối, lật thẻ, xếp chữ, nghe chọn hình, cờ ca-rô, Simon says.','#e2a72e'],['test','Bài kiểm tra','Đề giữa kỳ và cuối kỳ. Máy chấm điểm ngay.','#d9503f'],['mindmap','Sơ đồ tư duy','16 sơ đồ tranh từ vựng và mẫu câu, mỗi Unit một sơ đồ.','#1f8f7a'],['sheets','Phiếu bài tập','35 tuần phiếu bài tập cuối tuần kèm đáp án để in hoặc xem.','#14284b'],['video','Video bài học','16 bài học có giọng đọc: chữ cái, từ vựng, mẫu câu.','#e2a72e'],['present','Thuyết trình','Trình chiếu từng Unit, tự động đọc và chuyển trang.','#1f8f7a']];
   r.append(h('div',{className:'cards'},C.map(([k,t,d,c])=>h('button',{className:'card go',style:'--c:'+c,on:{click:()=>go(k)}},h('h3',{},t),h('p',{},d)))));
   r.append(h('p',{className:'note'},'Giọng đọc dùng bộ đọc của trình duyệt (US English). Nên mở trên Chrome hoặc Edge để có giọng nữ Anh-Mỹ. Bấm vào trang một lần để bật âm thanh.'));
 };
@@ -418,14 +443,14 @@ V.mindmap=r=>{
 };
 V.sheets=r=>{
   let cur=1,mode='w';const box=h('div');
-  r.append(h('h2',{},'Phiếu bài tập cuối tuần'),h('p',{className:'lead'},'35 tuần, mỗi tuần 2 trang. Bấm vào trang để xem to. Phần đáp án dành cho phụ huynh và giáo viên.'),box);
+  r.append(h('h2',{},'Phiếu bài tập cuối tuần'),h('p',{className:'lead'},'35 tuần, mỗi tuần 2 trang. Bấm vào ảnh để xem to. Phần đáp án dành cho phụ huynh và giáo viên.'),box);
   const pg=n=>String(n).padStart(2,'0');
   function draw(){box.innerHTML='';
     box.append(chipRow([['w','Phiếu bài tập'],['a','Đáp án']],mode,v=>{mode=v;draw()}));
     if(mode==='w'){
       const wk=h('div',{className:'weeks'},Array.from({length:35},(_,i)=>i+1).map(n=>h('button',{className:'chip','aria-pressed':String(n===cur),on:{click:()=>{cur=n;draw()}}},'Tuần '+n)));
-      const pages=[2*cur+1,2*cur+2].map(n=>({src:'ws/w-'+pg(n)+'.jpg',t:'Tuần '+cur+' · trang '+(n-2*cur)}));
-      box.append(wk,h('div',{className:'sheet'},pages.map((p,k)=>h('img',{src:p.src,alt:p.t,loading:'lazy',on:{click:()=>lightbox(pages,k)}}))),
+      const pages=[{src:'ws/week-'+pg(cur)+'.jpg',t:'Tuần '+cur}];
+      box.append(wk,h('div',{className:'sheet one'},pages.map((p,k)=>h('img',{src:p.src,alt:p.t,loading:'lazy',on:{click:()=>lightbox(pages,k)}}))),
         h('div',{className:'row',style:'margin-top:16px'},cur>1?h('button',{className:'btn alt',on:{click:()=>{cur--;draw();scrollTo(0,0)}}},'← Tuần '+(cur-1)):null,cur<35?h('button',{className:'btn',on:{click:()=>{cur++;draw();scrollTo(0,0)}}},'Tuần '+(cur+1)+' →'):null));
     }else{
       const pages=Array.from({length:15},(_,i)=>({src:'ws/a-'+(73+i)+'.jpg',t:'Đáp án · trang '+(i+1)}));
@@ -434,9 +459,91 @@ V.sheets=r=>{
   draw();
 };
 
+/* sentences for lesson videos */
+function sentFor(u,w){const e=w.en,n=u.n;
+  if(n===1)return 'This is a '+e+'.';
+  if(n===2)return 'I have a '+e+'.';
+  if(n===3)return 'This is my '+e+'.';
+  if(n===4)return 'This is a '+e+'.';
+  if(n===5)return 'I like '+e+'.';
+  if(n===6)return e==='red'?"It's red.":"It's a red "+e+'.';
+  if(n===7)return "There's a "+e+'.';
+  if(n===8)return 'Touch your '+e+'.';
+  if(n===9)return 'How many '+e+'?';
+  if(n===10)return "That's a "+e+'.';
+  if(n===11)return e==='run'?"He's running.":'Look at the '+e+'.';
+  if(n===12)return 'Look at the '+e+'.';
+  if(n===13)return (e==='bananas'?"He's having ":"She's having ")+e+'.';
+  if(n===14)return 'I can see a '+e+'.';
+  if(n===15)return e==='father'?'This is my father.':e==='football'?'I can see a football.':'Point to your '+e+'.';
+  if(n===16)return e==='wash'?'I can wash.':e==='water'?'This is water.':'I can see a window.';
+  return e}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function sayP(t,rate=.8){return new Promise(res=>{let d=false;const fin=()=>{if(!d){d=true;res()}};try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=rate;u.pitch=1.15;if(VOICE)u.voice=VOICE;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u)}catch(_){}setTimeout(fin,Math.max(1800,t.length*160))})}
+let VT=0;
+const PASTEL=['#f3fadf','#efeafc','#fde9ee','#e6f4fb'];
+function lessonStage(u){
+  const words=u.w.map(w=>h('div',{className:'lw'},h('img',{src:w.img,alt:w.en}),h('b',{},w.en)));
+  const sents=u.w.map((w,i)=>h('div',{className:'ls',style:'background:'+PASTEL[i%4]},'★ '+sentFor(u,w)));
+  const cloud=h('div',{className:'lc'},u.L);
+  const st=h('div',{className:'stage'},h('div',{className:'lt'},`Unit ${u.n}:  ${u.t}`),
+    h('div',{className:'lg'},cloud,h('div',{className:'lws'},words),h('div',{className:'lss'},h('div',{className:'lh'},'★ Sentence patterns'),sents)));
+  return {st,words,sents,cloud};
+}
+async function playLesson(u,S,rate){
+  const my=++VT;const off=()=>[...S.words,...S.sents].forEach(e=>e.classList.remove('on'));off();
+  const ok=()=>my===VT;
+  S.cloud.classList.add('on');await sayP(u.L.replace(/(.)(.)/,'$1, $2'),rate);if(!ok())return;S.cloud.classList.remove('on');await sleep(400);
+  for(let i=0;i<u.w.length;i++){if(!ok())return;off();S.words[i].classList.add('on');await sayP(u.w[i].en,rate);await sleep(300)}
+  for(let i=0;i<u.w.length;i++){if(!ok())return;off();S.sents[i].classList.add('on');await sayP(sentFor(u,u.w[i]),rate);await sleep(300)}
+  if(!ok())return;off();return true;
+}
+V.video=r=>{
+  let cur=1,rate=.8;const box=h('div');
+  r.append(h('h2',{},'Video bài học'),h('p',{className:'lead'},'Mỗi Unit có một bài học có giọng đọc: chữ cái, từ vựng rồi mẫu câu. Bấm "Phát" và nghe theo.'),box);
+  function draw(){VT++;try{speechSynthesis.cancel()}catch(_){}box.innerHTML='';const u=U[cur-1];
+    box.append(chipRow(U.map(x=>[x.n,'Unit '+x.n]),cur,v=>{cur=v;draw()}));
+    if(cur===1)box.append(h('h3',{style:'font:800 20px var(--f-display);margin:0 0 10px'},'Video gốc Unit 1'),h('video',{className:'vid',controls:true,preload:'metadata',src:'unit1.mp4','aria-label':'Video Unit 1'}),h('div',{style:'height:22px'}));
+    const S=lessonStage(u);let st;
+    const play=h('button',{className:'btn',on:{click:async()=>{play.disabled=true;const done=await playLesson(u,S,rate);play.disabled=false;if(done){good();addStars(1)}}}},'▶ Phát');
+    const stop=h('button',{className:'btn alt',on:{click:()=>{VT++;try{speechSynthesis.cancel()}catch(_){}[...S.words,...S.sents,S.cloud].forEach(e=>e.classList.remove('on'));play.disabled=false}}},'■ Dừng');
+    const slow=h('button',{className:'btn alt sm','aria-pressed':'false',on:{click:()=>{rate=rate===.8?.55:.8;slow.textContent=rate===.8?'🐢 Đọc chậm':'🐇 Đọc thường'}}},'🐢 Đọc chậm');
+    box.append(h('h3',{style:'font:800 20px var(--f-display);margin:0 0 10px'},'Bài học có giọng đọc'),S.st,h('div',{className:'row',style:'margin-top:14px'},play,stop,slow));}
+  draw();
+};
+
+/* presentation */
+V.present=r=>{
+  let cur=1,i=0,auto=false;const box=h('div');
+  r.append(h('h2',{},'Thuyết trình'),h('p',{className:'lead'},'Chọn Unit, rồi bấm Tự động để nghe cả bài, hoặc dùng nút ‹ › (hay phím mũi tên) để chuyển trang.'),box);
+  const slides=u=>[{k:'t'},...u.w.map(w=>({k:'w',w})),...u.w.map(w=>({k:'s',w,s:sentFor(u,w)})),{k:'e'}];
+  let keyh=null;
+  function draw(){VT++;auto=false;try{speechSynthesis.cancel()}catch(_){}box.innerHTML='';const u=U[cur-1],S=slides(u);i=0;
+    box.append(chipRow(U.map(x=>[x.n,'Unit '+x.n]),cur,v=>{cur=v;draw()}));
+    const stage=h('div',{className:'stage pres'}),info=h('span',{className:'q-meta',style:'margin:0'});
+    const speakSlide=()=>{const s=S[i];const t=s.k==='t'?u.t:s.k==='w'?s.w.en:s.k==='s'?s.s:'Great job!';return sayP(t,.8)};
+    function show(){const s=S[i];stage.replaceChildren();
+      if(s.k==='t')stage.append(h('div',{className:'pc'},h('div',{className:'pl'},u.L),h('div',{className:'pt'},'Unit '+u.n),h('div',{className:'pt2'},u.t),h('div',{className:'pv'},u.vi)));
+      if(s.k==='w')stage.append(h('div',{className:'pc'},h('div',{className:'pimg'},imgEl(s.w)),h('div',{className:'pt'},s.w.en),h('div',{className:'pv'},s.w.vi)));
+      if(s.k==='s'){const vi=(u.p.find(p=>p[0]===s.s)||[])[1];stage.append(h('div',{className:'pc'},h('div',{className:'pimg small'},imgEl(s.w)),h('div',{className:'pt2'},s.s),vi?h('div',{className:'pv'},vi):null))}
+      if(s.k==='e'){stage.append(h('div',{className:'pc'},h('div',{className:'pt'},'Great job! ★'),h('div',{className:'pv'},'Em đã học xong Unit '+u.n)));if(!show.done){show.done=1;addStars(1);confetti(80)}}
+      info.textContent='Trang '+(i+1)+'/'+S.length}
+    const go=d=>{i=Math.max(0,Math.min(S.length-1,i+d));show();if(!auto)speakSlide()};
+    async function run(){const my=++VT;auto=true;btnA.textContent='⏸ Dừng tự động';while(auto&&my===VT&&i<S.length){show();await speakSlide();await sleep(900);if(!auto||my!==VT)return;if(i<S.length-1)i++;else break}auto=false;btnA.textContent='▶ Tự động'}
+    const btnA=h('button',{className:'btn',on:{click:()=>{if(auto){auto=false;VT++;try{speechSynthesis.cancel()}catch(_){}btnA.textContent='▶ Tự động'}else{if(i>=S.length-1)i=0;run()}}}},'▶ Tự động');
+    const fs=h('button',{className:'btn alt sm',on:{click:()=>{try{stage.requestFullscreen().catch(()=>toast('Không bật được toàn màn hình',1))}catch(_){toast('Không bật được toàn màn hình',1)}}}},'⛶ Toàn màn hình');
+    box.append(stage,h('div',{className:'row',style:'margin-top:14px'},h('button',{className:'btn alt',on:{click:()=>{auto=false;VT++;go(-1)}}},'‹ Trước'),btnA,h('button',{className:'btn alt',on:{click:()=>{auto=false;VT++;go(1)}}},'Sau ›'),h('button',{className:'say',title:'Nghe lại',on:{click:()=>speakSlide()}},'🔊'),fs,info));
+    show();
+    if(keyh)removeEventListener('keydown',keyh);
+    keyh=e=>{if(!document.body.contains(stage)){removeEventListener('keydown',keyh);return}if(e.key==='ArrowRight'){auto=false;VT++;go(1)}if(e.key==='ArrowLeft'){auto=false;VT++;go(-1)}};addEventListener('keydown',keyh);
+  }
+  draw();
+};
+addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&!/^data:/.test(t.src)&&!t.dataset.err){t.dataset.err=1;const m=h('div',{className:'note',style:'padding:14px;border:2px dashed var(--line);border-radius:12px'},'Chưa thấy ảnh "'+(t.getAttribute('src')||'')+'". Hãy chắc chắn đã tải đủ các thư mục ws, mm, audio lên GitHub, nằm cùng cấp với index.html.');t.replaceWith(m)}},true);
+
 /* router */
 function go(k){location.hash=k}
-function route(){const k=(location.hash||'#home').slice(1);const key=V[k]?k:'home';
+function route(){VT++;const k=(location.hash||'#home').slice(1);const key=V[k]?k:'home';
   $('#nav').innerHTML='';TABS.forEach(([id,l])=>$('#nav').append(h('button',{'aria-current':id===key?'page':'false',on:{click:()=>go(id)}},l)));
   const app=$('#app');app.innerHTML='';try{speechSynthesis.cancel()}catch(_){}V[key](app);scrollTo(0,0)}
 addEventListener('hashchange',route);
